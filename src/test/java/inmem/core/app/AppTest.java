@@ -1,19 +1,66 @@
 package inmem.core.app;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/**
- * Unit test for simple App.
- */
+import inmem.core.app.parser.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
+
+
 public class AppTest {
 
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
+    public void tokenize() {
+        String query = "set name jakub";
+        List<Token> tokens = new Scanner(query).tokenize();  
+
+        List<Token> expected = new ArrayList<>();
+        expected.add(new Token.Set());
+        expected.add(new Token.Identifier("name"));
+        expected.add(new Token.Identifier("jakub"));
+        expected.add(new Token.EOS());
+
+        assertEquals(tokens, expected);
+    }
+
+    @Test
+    public void parseSetStatement() {
+        String query = "set name jakub";
+        List<Token> tokens = new Scanner(query).tokenize();
+        Statement stmnt = new Parser(tokens).parse().get();
+        
+        Statement exptected = new Statement.Set(
+            new Statement.SetCore("name", "jakub")
+        );
+
+        assertEquals(stmnt, exptected);
+    }
+    
+    @Test
+    public void parseGetStatement() {
+        String query = "get name";
+        List<Token> tokens = new Scanner(query).tokenize();
+        Statement stmnt = new Parser(tokens).parse().get();
+        
+        Statement exptected = new Statement.Get(
+            new Statement.GetCore("name")
+        );
+
+        assertEquals(stmnt, exptected);
+    }
+    
+    @Test
+    public void parseDelStatement() {
+        String query = "del name";
+        List<Token> tokens = new Scanner(query).tokenize();
+        Statement stmnt = new Parser(tokens).parse().get();
+        
+        Statement exptected = new Statement.Del(
+            new Statement.DelCore("name")
+        );
+
+        assertEquals(stmnt, exptected);
     }
 }
