@@ -1,4 +1,4 @@
-package inmem.core.app.parser;
+package inmem.core.app.frontend.parser;
 
 import java.util.List;
 import java.util.ArrayList;

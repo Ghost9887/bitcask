@@ -3,7 +3,7 @@ package inmem.core.app;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import inmem.core.app.parser.*;
+import inmem.core.app.frontend.parser.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
