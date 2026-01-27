@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public final class Parser {
 
-    private List<Token> tokens;
+    private final List<Token> tokens;
     private int ip = 0;
 
     public Parser(List<Token> tokens) {

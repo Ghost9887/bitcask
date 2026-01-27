@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import inmem.core.app.frontend.parser.*;
+import inmem.core.app.frontend.Exec;
 
 public class Main {
 
@@ -46,7 +47,8 @@ public class Main {
             Parser parser = new Parser(tokens);
             Optional<Statement> stmnt = parser.parse();
             if (stmnt.isPresent()) {
-                System.out.println(stmnt.get());
+                //System.out.println(stmnt.get());
+                new Exec(stmnt.get()).execute();
             }
         }
     }
