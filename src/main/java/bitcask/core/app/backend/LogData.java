@@ -10,7 +10,7 @@ public final class LogData {
     private final String key; 
     private final String value;
 
-    private byte[] bytes;
+    private String bytes;
 
     public LogData(int keySize, int valueSize, String key, String value) {
         this.keySize = keySize;
@@ -19,20 +19,30 @@ public final class LogData {
         this.value = value;
     }
 
-    public void convertToBytes() {
-        int capacity = Long.BYTES + Integer.BYTES + key.getBytes().length + value.getBytes().length;
-        ByteBuffer buff = ByteBuffer.allocate(capacity);
+    public void convertToBinary() {
+        StringBuilder str = new StringBuilder();
         
-        buff.putLong(time);
-        buff.putInt(keySize);
-        buff.putInt(valueSize);
-        buff.put(key.getBytes());
-        buff.put(value.getBytes());
+        str.append(Long.toBinaryString(time));
+        str.append(Integer.toBinaryString(keySize));
+        str.append(Integer.toBinaryString(valueSize));
+        str.append(strToBinary(key));
+        str.append(strToBinary(value));
 
-        bytes = buff.array();
+        bytes = str.toString();
     }
 
-    public byte[] getBytes() {
+    public String strToBinary(String data) {
+        StringBuilder str = new StringBuilder();
+
+        for (int i = 0; i < data.length(); i++) {
+            int ascii = (int) data.charAt(i);
+            str.append(Integer.toBinaryString(ascii));
+        }
+
+        return str.toString();
+    }
+
+    public String getBits() {
         return bytes;
     }
 }
