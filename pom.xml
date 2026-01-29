@@ -5,11 +5,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>inmem.core.app</groupId>
-    <artifactId>inmem</artifactId>
+    <groupId>bitcask.core.app</groupId>
+    <artifactId>bitcask</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>inmem</name>
+    <name>bitcask</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -61,7 +61,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.6.3</version>
                 <configuration>
-                    <mainClass>inmem.core.app.Main</mainClass>
+                    <mainClass>bitcask.core.app.Main</mainClass>
                 </configuration>
             </plugin>
 

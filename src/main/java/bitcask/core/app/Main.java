@@ -1,4 +1,4 @@
-package inmem.core.app;
+package bitcask.core.app;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import inmem.core.app.frontend.parser.*;
-import inmem.core.app.frontend.Exec;
+import bitcask.core.app.frontend.parser.*;
+import bitcask.core.app.frontend.Exec;
 
 public class Main {
 

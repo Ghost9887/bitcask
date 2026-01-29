@@ -1,7 +1,7 @@
-package inmem.core.app.frontend;
+package bitcask.core.app.frontend;
 
-import inmem.core.app.frontend.parser.Statement;
-import inmem.core.app.backend.Database;
+import bitcask.core.app.frontend.parser.Statement;
+import bitcask.core.app.backend.Database;
 
 import java.util.Optional;
 

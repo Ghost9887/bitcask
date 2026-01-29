@@ -1,4 +1,4 @@
-package inmem.core.app.frontend.parser;
+package bitcask.core.app.frontend.parser;
 
 public sealed interface Statement permits 
     Statement.Get, Statement.GetCore, Statement.Set, Statement.SetCore, 
