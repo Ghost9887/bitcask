@@ -9,13 +9,14 @@ import java.util.Optional;
 
 import bitcask.core.app.frontend.parser.*;
 import bitcask.core.app.frontend.Exec;
-import bitcask.core.app.backend.Database;
+import bitcask.core.app.backend.Bitcask;
 
 public class Main {
 
     public static void main(String[] args) {
+        
         try {
-            Database.rebuild();
+            Bitcask.rebuild();
             repl();
         }catch (IOException e) {
             System.out.println("Error: " + e);
@@ -27,7 +28,6 @@ public class Main {
         //clear screen
         System.out.print("\033[H\033[2J");
         System.out.flush();
-
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {

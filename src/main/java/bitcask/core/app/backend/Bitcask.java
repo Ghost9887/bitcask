@@ -10,12 +10,13 @@ import java.io.IOException;
 import java.io.FileWriter;
 import java.io.FileReader;
 
-public class Database {
+public final class Bitcask {
     
     private static Hashtable<String, String> table = new Hashtable<>();
     private final static String data = "data/bitcask.0";
+    private final static String log = "data/0.log";
     
-    public Database() {}
+    public Bitcask() {}
 
     public static void add(String key, String value) {
         table.put(key, value);
@@ -55,7 +56,6 @@ public class Database {
     public static void rebuild() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(data));
-            
             String line;
             while((line = reader.readLine()) != null) {
                 String[] entry = line.split(":"); 
