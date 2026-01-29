@@ -9,11 +9,13 @@ import java.util.Optional;
 
 import bitcask.core.app.frontend.parser.*;
 import bitcask.core.app.frontend.Exec;
+import bitcask.core.app.backend.Database;
 
 public class Main {
 
     public static void main(String[] args) {
         try {
+            Database.rebuild();
             repl();
         }catch (IOException e) {
             System.out.println("Error: " + e);
@@ -29,7 +31,7 @@ public class Main {
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
 
         while (true) {
-            System.out.printf("inmem > ");
+            System.out.printf("bitcask > ");
             final String query = buff.readLine().trim();
 
             if (query.equals("quit")) {
