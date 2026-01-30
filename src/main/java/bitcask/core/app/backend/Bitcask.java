@@ -13,7 +13,6 @@ import java.io.FileReader;
 public final class Bitcask {
     
     private static Hashtable<String, String> table = new Hashtable<>();
-    private final static String data = "data/bitcask.0";
     private final static String log = "data/0.log";
     
     public Bitcask() {}
@@ -39,10 +38,13 @@ public final class Bitcask {
     public static void writeToFile(String key, String value) {
         try {
             LogData logData = new LogData(key, value);
-            logData.convertToBinary();
+            logData.convertToBytes();
 
             BufferedWriter writer = new BufferedWriter(new FileWriter(log, true));
-            writer.write(logData.getBits());
+            byte[] bytes = logData.getBytes();
+            for (byte b : bytes) {
+                writer.write(b);
+            }
             writer.newLine();
             writer.close();
         }catch (IOException e) {
@@ -50,21 +52,4 @@ public final class Bitcask {
         }
     }
 
-    /*
-    public static void rebuild() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(data));
-            String line;
-            while((line = reader.readLine()) != null) {
-                String[] entry = line.split(":"); 
-                String key = entry[0];
-                String value = entry[1];
-                table.put(key, value);
-            }
-
-        }catch (IOException e) {
-            System.out.println("Failed to rebuild table: " + e.toString());
-        }
-    }
-    */
 }
