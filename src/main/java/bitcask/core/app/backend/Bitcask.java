@@ -20,7 +20,7 @@ public final class Bitcask {
 
     public static void add(String key, String value) {
         table.put(key, value);
-        writeToFile();
+        writeToFile(key, value);
     }
 
     public static Optional<String> get(String key) {
@@ -28,31 +28,29 @@ public final class Bitcask {
         if (value == null) {
             return Optional.empty();
         }
-        writeToFile();
         return Optional.of(value);
     }
     
     public static void delete(String key) {
-        table.remove(key);
-        writeToFile();
+        //table.remove(key);
+        //writeToFile();
     }
 
-    public static void writeToFile() {
+    public static void writeToFile(String key, String value) {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(data));
-            
-            for(Map.Entry<String, String> entry : table.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                writer.write(key + ":" + value + "\n");
-            }
+            LogData logData = new LogData(key, value);
+            logData.convertToBinary();
 
+            BufferedWriter writer = new BufferedWriter(new FileWriter(log, true));
+            writer.write(logData.getBits());
+            writer.newLine();
             writer.close();
         }catch (IOException e) {
             System.out.println("Failed to write to file: " + e.toString());
         }
     }
 
+    /*
     public static void rebuild() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(data));
@@ -68,4 +66,5 @@ public final class Bitcask {
             System.out.println("Failed to rebuild table: " + e.toString());
         }
     }
+    */
 }

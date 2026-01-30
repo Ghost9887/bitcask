@@ -16,7 +16,6 @@ public class Main {
     public static void main(String[] args) {
         
         try {
-            Bitcask.rebuild();
             repl();
         }catch (IOException e) {
             System.out.println("Error: " + e);
@@ -29,7 +28,6 @@ public class Main {
         System.out.print("\033[H\033[2J");
         System.out.flush();
         BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
-
         while (true) {
             System.out.printf("bitcask > ");
             final String query = buff.readLine().trim();

@@ -4,34 +4,34 @@ import java.nio.ByteBuffer;
 
 public final class LogData {
 
+
+    private final String divisor = "100000100110000010001110110110111";
+
     private final long time = System.nanoTime(); 
-    private final int keySize;
-    private final int valueSize;
+    private int keySize;
+    private int valueSize;
     private final String key; 
     private final String value;
 
-    private String bytes;
+    private String bits;
 
-    public LogData(int keySize, int valueSize, String key, String value) {
-        this.keySize = keySize;
-        this.valueSize = valueSize;
+    public LogData(String key, String value) {
         this.key = key;
         this.value = value;
     }
     
-    //TODO: refactor to make it work here
-    public static void calculateCRC(String bits, String divisor) {
+    public String calculateCRC(String bits) {
         //append the zeros;
         StringBuilder str = new StringBuilder(bits);
         str.append("0".repeat(divisor.length() - 1));
-        System.out.println(str);
 
         //starting set of bits
         StringBuilder res = new StringBuilder(bits.substring(0, divisor.length()));
         int index = divisor.length() - 1;
 
-        while (index <= str.length()) {
+        while (true) {
             StringBuilder temp = new StringBuilder();
+            //System.out.println(res);
             if (res.charAt(0) == '0') {
                 temp.append(res.substring(1, res.length()));
             }
@@ -50,19 +50,33 @@ public final class LogData {
             if (index >= str.length()) break;
             res.append(str.charAt(index));
         }
-        System.out.println(res);
+        //System.out.println(res);
+
+        return res.toString();
     }
 
     public void convertToBinary() {
-        StringBuilder str = new StringBuilder();
+        StringBuilder temp = new StringBuilder();
         
-        str.append(Long.toBinaryString(time));
-        str.append(Integer.toBinaryString(keySize));
-        str.append(Integer.toBinaryString(valueSize));
-        str.append(strToBinary(key));
-        str.append(strToBinary(value));
+        temp.append(Long.toBinaryString(time));
 
-        bytes = str.toString();
+        String keyBin = strToBinary(key);
+        keySize = keyBin.length();
+
+        String valueBin = strToBinary(value);
+        valueSize = valueBin.length();
+
+        temp.append(Integer.toBinaryString(keySize));
+        temp.append(Integer.toBinaryString(valueSize));
+        temp.append(keyBin);
+        temp.append(valueBin);
+        
+        StringBuilder res = new StringBuilder();
+        res.append(calculateCRC(temp.toString()));
+        res.append(temp);
+
+        //System.out.println(res);
+        bits = res.toString();
     }
 
     public String strToBinary(String data) {
@@ -72,11 +86,10 @@ public final class LogData {
             int ascii = (int) data.charAt(i);
             str.append(Integer.toBinaryString(ascii));
         }
-
         return str.toString();
     }
 
     public String getBits() {
-        return bytes;
+        return bits;
     }
 }
